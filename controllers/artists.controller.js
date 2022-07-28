@@ -28,7 +28,7 @@ const createArtist = catchAsync(async (req, res, next) => {
 
   const imgRes = await uploadBytes(imgRef, req.file.buffer);
 
-  const imgFullPath = getDownloadURL(imgRef);
+  const imgFullPath = await getDownloadURL(imgRef);
 
   const newArtist = await Artist.create({
     name,
@@ -63,12 +63,6 @@ const createAlbum = catchAsync(async (req, res, next) => {
   const { artistId } = req.params;
   const { title, genre } = req.body;
 
-  const imgRef = ref(storage, `albums/${Date.now()}_${req.file.originalname}`);
-
-  const imgRes = await uploadBytes(imgRef, req.file.buffer);
-
-  const imgFullPath = getDownloadURL(imgRef);
-
   const artist = await Artist.findOne({
     where: { id: artistId, status: "active" },
   });
@@ -76,6 +70,12 @@ const createAlbum = catchAsync(async (req, res, next) => {
   if (!artist) {
     return next(new AppError("Artist not found", 404));
   }
+
+  const imgRef = ref(storage, `albums/${Date.now()}_${req.file.originalname}`);
+
+  const imgRes = await uploadBytes(imgRef, req.file.buffer);
+
+  const imgFullPath = await getDownloadURL(imgRef);
 
   const newAlbum = await Album.create({
     artistId,

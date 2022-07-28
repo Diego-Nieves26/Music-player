@@ -1,4 +1,7 @@
 const express = require("express");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 
 // Routers
 const { usersRouter } = require("./routes/users.routes");
@@ -15,6 +18,19 @@ const { AppError } = require("./utils/appError.util");
 const app = express();
 
 app.use(express.json());
+
+// Helmet
+app.use(helmet());
+
+// Compression
+app.use(compression());
+
+// Morgan
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+} else {
+  app.use(morgan("combined"));
+}
 
 // Endpoints
 app.use("/api/v1/users", usersRouter);
