@@ -1,5 +1,5 @@
-const { initializeApp } = require("firebase/app");
 const { getStorage } = require("firebase/storage");
+const { initializeApp } = require("firebase/app");
 const dotenv = require("dotenv");
 
 dotenv.config({ path: "./config.env" });

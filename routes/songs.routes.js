@@ -2,11 +2,11 @@ const express = require("express");
 
 // Controllers
 const {
-  createSong,
   getAllSongsFromAnAlbum,
+  markAsFavorite,
+  createSong,
   updateSong,
   disableSong,
-  markAsFavorite,
 } = require("../controllers/songs.controller");
 
 // Middlewares

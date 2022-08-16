@@ -1,11 +1,11 @@
+const compression = require("compression");
 const express = require("express");
 const helmet = require("helmet");
-const compression = require("compression");
 const morgan = require("morgan");
 
 // Routers
-const { usersRouter } = require("./routes/users.routes");
 const { artistRouter } = require("./routes/artists.routes");
+const { usersRouter } = require("./routes/users.routes");
 const { songsRouter } = require("./routes/songs.routes");
 
 // Global error controller
@@ -33,8 +33,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Endpoints
-app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/artists", artistRouter);
+app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/songs", songsRouter);
 
 app.all("*", (req, res, next) => {
